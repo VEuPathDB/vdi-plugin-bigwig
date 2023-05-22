@@ -1,1 +1,24 @@
+#!/usr/bin/perl
+
+use strict;
+use DBI;
+use FindBin;
+use lib "$FindBin::Bin/../lib/perl";
+use BigWigUtils;
+
+usage() unless scalar(@ARGV) == 1 && $ENV{USER_DATASETS_DIR};
+
+my ($userDatasetId) = @ARGV;
+
+deleteUserdatasetDir("$ENV{USER_DATASETS_DIR}/$userDatasetId");
+
+sub usage {
+  die "
+Uninstall bigwig files.  Deletes entire user datsaet directory, and all included files.
+
+Usage: dataset_id
+
+Environment: USER_DATASETS_DIR
+";
+}
 

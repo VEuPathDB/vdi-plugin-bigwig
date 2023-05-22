@@ -13,10 +13,12 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
 COPY bin/ /opt/veupathdb/bin
 COPY testdata/ /opt/veupathdb/testdata
 
-RUN export LIB_GIT_COMMIT_SHA=c4ae3de568446d28e13d72f88170750cb8cda13f\
+RUN export LIB_GIT_COMMIT_SHA=fe1fc269dd66801777fba0b8d86b2ab45e9bd7ac\
     && git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
     && cd lib-vdi-plugin-rnaseq \
     && git checkout $LIB_GIT_COMMIT_SHA \
+    && mkdir -p /opt/veupathdb/lib/perl \
+    && cp lib/perl/BigWigUtils.pm /opt/veupathdb/lib/perl \
     && cp bin/* /opt/veupathdb/bin 
 
 RUN chmod +x /opt/veupathdb/bin/*
