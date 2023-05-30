@@ -13,7 +13,8 @@ my ($datasetId, $dataDir) = @ARGV;
 opendir(my $dh, $dataDir) or die "can't open dir '$dataDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
-  installBwFile("$dataDir/$file");
+  next if $file =~ /^\.+$/;
+  installBwFile($datasetId, "$dataDir/$file");
 }
 
 sub usage {
