@@ -1,1 +1,31 @@
+#!/usr/bin/perl
+
+use strict;
+use File::Copy;
+use FindBin;
+use lib "$FindBin::Bin/../lib/perl";
+use BigWigUtils;
+
+usage() unless scalar(@ARGV) == 2 && $ENV{USER_DATASETS_DIR};
+
+my ($datasetId, $dataDir) = @ARGV;
+
+opendir(my $dh, $dataDir) or die "can't open dir '$dataDir'\n";
+my @files = readdir($dh);
+for my $file (@files) {
+  next if $file =~ /^\.+$/;
+  installBwFile($datasetId, "$dataDir/$file");
+}
+
+sub usage {
+  die "
+Install bigwig files.  Installs each file into the target user dataset dir
+
+Usage: dataset_id data_dir
+
+Environment: USER_DATASETS_DIR
+";
+}
+
+
 

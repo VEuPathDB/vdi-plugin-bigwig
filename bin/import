@@ -1,1 +1,41 @@
+#!/usr/bin/perl
 
+use strict;
+use Data::Dumper;
+use File::Copy;
+
+usage() unless scalar(@ARGV) == 2;
+
+my ($inputDir, $outputDir) = @ARGV;
+
+opendir(my $dh, $inputDir) or die "can't open dir '$inputDir'\n";
+my @files = readdir($dh);
+for my $file (@files) {
+  next if $file =~ /.*\.$/;
+  validationError("All files must have extension .bw '$file'") unless $file =~ /\.bw$/;
+  validationError("Invalid bigwig file: '$file'\n") if system("isbigwig $inputDir/$file");
+  validationError("File too big (> 500M): '$file'\n") if -s $file > (5 * 1024 * 1024);
+  copy("$inputDir/$file", "$outputDir/$file") || die "Failed copying to outputDir $!\n";
+}
+
+sub validationError {
+  my ($msg) = @_;
+  print STDOUT "Validation error: $msg\n";
+  exit 1;
+}
+
+sub usage {
+  die "
+Import bigwig files into VDI.
+
+Usage: import input_dir output_dir
+
+Where:
+ - input_dir:  directory containing only bigwig files (.bw extension)
+ - output_dir: directory containing those bigwig files (install ready)
+
+Exit code 0: all files valid
+Exit code 1: one or more invalid.  Message on STDOUT
+Exit code 2: system error. Logs on STDERR
+";
+}
