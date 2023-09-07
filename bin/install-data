@@ -6,7 +6,7 @@ use FindBin;
 use lib "$FindBin::Bin/../lib/perl";
 use BigWigUtils;
 
-usage() unless scalar(@ARGV) == 2 && $ENV{USER_DATASETS_DIR};
+usage() unless scalar(@ARGV) == 2 && $ENV{DATA_FILES};
 
 my ($datasetId, $dataDir) = @ARGV;
 
