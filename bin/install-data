@@ -23,7 +23,7 @@ Install bigwig files.  Installs each file into the target user dataset dir
 
 Usage: dataset_id data_dir
 
-Environment: USER_DATASETS_DIR
+Environment: DATA_FILES
 ";
 }
 
