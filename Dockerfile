@@ -10,7 +10,7 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
 COPY bin/ /opt/veupathdb/bin
 #COPY testdata/ /opt/veupathdb/testdata
 
-RUN export LIB_GIT_COMMIT_SHA=39d11be9e13ac82cfa12912389095cf07f32eed8\
+RUN export LIB_GIT_COMMIT_SHA=2dbc30a8a9579124e578fa8a8235cc8ec85a2159\
     && git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
     && cd lib-vdi-plugin-rnaseq \
     && git checkout $LIB_GIT_COMMIT_SHA \
