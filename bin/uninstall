@@ -6,11 +6,11 @@ use FindBin;
 use lib "$FindBin::Bin/../lib/perl";
 use BigWigUtils;
 
-usage() unless scalar(@ARGV) == 1 && $ENV{USER_DATASETS_DIR};
+usage() unless scalar(@ARGV) == 1 && $ENV{DATA_FILES};
 
 my ($userDatasetId) = @ARGV;
 
-deleteUserDatasetDir("$ENV{USER_DATASETS_DIR}/$userDatasetId");
+deleteUserDatasetDir("$ENV{DATA_FILES}/$userDatasetId");
 
 sub usage {
   die "
@@ -18,7 +18,7 @@ Uninstall bigwig files.  Deletes entire user datsaet directory, and all included
 
 Usage: dataset_id
 
-Environment: USER_DATASETS_DIR
+Environment: DATA_FILES
 ";
 }
 
