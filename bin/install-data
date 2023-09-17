@@ -8,13 +8,15 @@ use BigWigUtils;
 
 usage() unless scalar(@ARGV) == 2 && $ENV{DATA_FILES};
 
-my ($datasetId, $dataDir) = @ARGV;
+my ($datasetId, $inputDataDir) = @ARGV;
 
-opendir(my $dh, $dataDir) or die "can't open dir '$dataDir'\n";
+die "DATA_FILES is not a valid directory\n" unless -d $ENV{DATA_FILES};
+
+opendir(my $dh, $inputDataDir) or die "can't open input data dir '$inputDataDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
   next if $file =~ /^\.+$/;
-  installBwFile($datasetId, "$dataDir/$file");
+  installBwFile("$inputDataDir/$file", $ENV{DATA_FILES});
 }
 
 sub usage {
