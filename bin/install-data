@@ -10,13 +10,16 @@ usage() unless scalar(@ARGV) == 2 && $ENV{DATA_FILES};
 
 my ($datasetId, $inputDataDir) = @ARGV;
 
-die "DATA_FILES is not a valid directory\n" unless -d $ENV{DATA_FILES};
+my $datasetDir = $ENV{DATA_FILES};
+die "Dataset target dir $datasetDir already exists\n" if -e $datasetDir;
+die "blah blah\n" unless -e "$datasetDir/..";
+mkdir($datasetDir) || die "Failed creating dataset target dir $datasetDir\n";
 
 opendir(my $dh, $inputDataDir) or die "can't open input data dir '$inputDataDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
   next if $file =~ /^\.+$/;
-  installBwFile("$inputDataDir/$file", $ENV{DATA_FILES});
+  installBwFile("$inputDataDir/$file", $datasetDir);
 }
 
 sub usage {
