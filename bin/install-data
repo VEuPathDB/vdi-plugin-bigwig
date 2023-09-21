@@ -12,7 +12,7 @@ my ($datasetId, $inputDataDir) = @ARGV;
 
 my $datasetDir = $ENV{DATA_FILES};
 die "Dataset target dir $datasetDir already exists\n" if -e $datasetDir;
-mkdir($datasetDir) || die "Failed creating dataset target dir $datasetDir\n";
+mkdir($datasetDir, 0777) || die "Failed creating dataset target dir $datasetDir\n";
 
 opendir(my $dh, $inputDataDir) or die "can't open input data dir '$inputDataDir'\n";
 my @files = readdir($dh);
