@@ -1,11 +1,6 @@
 #!/usr/bin/perl
 
-# RNA Seq does not install meta data in the application
-
-exit 0;
-#!/usr/bin/perl
-
-# RNA Seq does not install meta data in the application
+# Bigwig does not install meta data in the application
 
 exit 0;
 
