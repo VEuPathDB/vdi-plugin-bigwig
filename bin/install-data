@@ -18,7 +18,7 @@ chmod(0775, $datasetDir) || die "Failed chmod of $datasetDir\n"; # rwxrwxr-x
 opendir(my $dh, $inputDataDir) or die "can't open input data dir '$inputDataDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
-  next if $file =~ /^\.+$/;
+  next if $file =~ /^\.+$/ or $file =~ /\.json$/;  # ignore vdi json control files
   installBwFile("$inputDataDir/$file", $datasetDir);
 }
 
