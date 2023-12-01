@@ -10,7 +10,7 @@ usage() unless scalar(@ARGV) == 1 && $ENV{DATA_FILES};
 
 my ($userDatasetId) = @ARGV;
 
-deleteUserDatasetDir("$ENV{DATA_FILES}/$userDatasetId");
+deleteUserDatasetDir("$ENV{DATA_FILES}");
 
 sub usage {
   die "
