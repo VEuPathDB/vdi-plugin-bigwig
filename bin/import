@@ -8,7 +8,7 @@ usage() unless scalar(@ARGV) == 2;
 
 my ($inputDir, $outputDir) = @ARGV;
 
-my $VALIDATION_ERROR_CODE = 99
+my $VALIDATION_ERROR_CODE = 99;
 
 opendir(my $dh, $inputDir) or die "can't open dir '$inputDir'\n";
 my @files = readdir($dh);
