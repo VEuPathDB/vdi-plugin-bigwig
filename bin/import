@@ -14,10 +14,10 @@ opendir(my $dh, $inputDir) or die "can't open dir '$inputDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
   next if $file =~ /.*\.$/;
-  validationError("All files must have extension .bw '$file'") unless $file =~ /\.bw$/;
   validationError("Invalid bigwig file: '$file'\n") if system("isbigwig $inputDir/$file");
   validationError("File too big (> 500M): '$file'\n") if -s $file > (5 * 1024 * 1024);
-  copy("$inputDir/$file", "$outputDir/$file") || die "Failed copying to outputDir $!\n";
+  my $outfile = ($file =~ /\.bw$/)? $file : "$file.bw"; # needed for jbrowse
+  copy("$inputDir/$file", "$outputDir/$outfile") || die "Failed copying to outputDir $!\n";
 }
 
 sub validationError {
