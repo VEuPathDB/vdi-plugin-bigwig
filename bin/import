@@ -16,7 +16,7 @@ for my $file (@files) {
   next if $file =~ /.*\.$/;
   validationError("Invalid bigwig file: '$file'\n") if system("isbigwig $inputDir/$file");
   validationError("File too big (> 500M): '$file'\n") if -s $file > (5 * 1024 * 1024);
-  my $outfile = ($file =~ /\.bw$/)? $file : "$file.bw";
+  my $outfile = ($file =~ /\.bw$/)? $file : "$file.bw"; # needed for jbrowse
   copy("$inputDir/$file", "$outputDir/$outfile") || die "Failed copying to outputDir $!\n";
 }
 
