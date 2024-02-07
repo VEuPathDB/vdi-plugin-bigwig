@@ -1,24 +1,5 @@
 #!/usr/bin/perl
 
-use strict;
-use DBI;
-use FindBin;
-use lib "$FindBin::Bin/../lib/perl";
-use BigWigUtils;
-
-usage() unless scalar(@ARGV) == 1 && $ENV{DATA_FILES};
-
-my ($userDatasetId) = @ARGV;
-
-deleteUserDatasetDir("$ENV{DATA_FILES}");
-
-sub usage {
-  die "
-Uninstall bigwig files.  Deletes entire user datsaet directory, and all included files.
-
-Usage: dataset_id
-
-Environment: DATA_FILES
-";
-}
+# No work to do.  Plugin handler service will delete the DATA_DIR for this UD
+exit 0;
 
