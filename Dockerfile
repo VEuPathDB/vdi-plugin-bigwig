@@ -7,7 +7,7 @@ RUN apt-get update \
 COPY bin/ /opt/veupathdb/bin
 #COPY testdata/ /opt/veupathdb/testdata
 
-RUN export LIB_GIT_COMMIT_SHA=435acc522fdf44ec6d5171165db2b71079693100\
+RUN export LIB_GIT_COMMIT_SHA=896b691dc64bb5841fac808deba02141862c1831\
     && git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
     && cd lib-vdi-plugin-rnaseq \
     && git checkout $LIB_GIT_COMMIT_SHA \
