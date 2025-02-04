@@ -10,7 +10,7 @@ RUN apt-get update \
 RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
   && cd lib-vdi-plugin-rnaseq \
   && git checkout $LIB_GIT_COMMIT_SHA \
-  && mkdir -p /opt/veupathdb/lib/perl \
+  && mkdir -p /opt/veupathdb/lib/perl /opt/veupathdb/bin \
   && cp lib/perl/BigWigUtils.pm /opt/veupathdb/lib/perl \
   && cp bin/* /opt/veupathdb/bin \
   && rm -rf lib-vdi-plugin-rnaseq
