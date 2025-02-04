@@ -3,8 +3,7 @@ FROM veupathdb/vdi-plugin-base:8.1.0-rc3
 ARG LIB_GIT_COMMIT_SHA=099844ec5005e7fab95358b2b538dbe4f0581572
 
 RUN apt-get update \
-  && apt-get install -y git perl libdbi-perl python3 python3-numpy \
-    python3-pybigwig \
+  && apt-get install -y git python3 python3-numpy python3-pybigwig \
   && apt-get clean
 
 RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
