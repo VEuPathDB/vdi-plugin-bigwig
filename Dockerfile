@@ -1,4 +1,4 @@
-FROM veupathdb/vdi-plugin-base:8.1.0-rc8
+FROM veupathdb/vdi-plugin-base:8.1.0-rc9
 
 ARG LIB_GIT_COMMIT_SHA=099844ec5005e7fab95358b2b538dbe4f0581572
 
