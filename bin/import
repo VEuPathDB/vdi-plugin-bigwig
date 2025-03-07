@@ -14,6 +14,7 @@ opendir(my $dh, $inputDir) or die "can't open dir '$inputDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
   next if $file =~ /.*\.$/;
+  next if $file == "vdi-meta.json";
   validationError("Invalid bigwig file: '$file'\n") if system("isbigwig $inputDir/$file");
   validationError("File too big (> 500M): '$file'\n") if -s $file > (5 * 1024 * 1024);
   my $outfile = ($file =~ /\.bw$/)? $file : "$file.bw"; # needed for jbrowse
