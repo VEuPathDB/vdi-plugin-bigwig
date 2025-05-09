@@ -11,12 +11,10 @@ RUN apt-get update \
   && sed -i -e "s/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen \
   && dpkg-reconfigure --frontend=noninteractive locales \
   && update-locale LANG=en_US.UTF-8 \
-  && apt-get install -y tzdata curl wget \
+  && apt-get install -y tzdata curl wget git python3-numpy python3-pybigwig \
+  && apt-get clean \
   && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
   && echo ${TZ} > /etc/timezone
-
-RUN apt-get install -y git python3 python3-numpy python3-pybigwig \
-  && apt-get clean
 
 ARG LIB_GIT_COMMIT_SHA=099844ec5005e7fab95358b2b538dbe4f0581572
 RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
