@@ -1,4 +1,4 @@
-FROM foxcapades/ubuntu-corretto:24.04-jdk21
+FROM amazoncorretto:25-alpine3.22-jdk
 
 ENV LANG=en_US.UTF-8 \
   JVM_MEM_ARGS="-Xms16m -Xmx64m" \
@@ -6,15 +6,14 @@ ENV LANG=en_US.UTF-8 \
   TZ="America/New_York" \
   PATH=/opt/veupathdb/bin:$PATH
 
-RUN apt-get update \
-  && apt-get install -y locales \
-  && sed -i -e "s/# en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/" /etc/locale.gen \
-  && dpkg-reconfigure --frontend=noninteractive locales \
-  && update-locale LANG=en_US.UTF-8 \
-  && apt-get install -y tzdata curl wget git python3-numpy python3-pybigwig netcat-openbsd \
-  && apt-get clean \
+RUN apk add --no-cache \
+     wget git tzdata unzip make gcc netcat-openbsd musl-dev \
+     curl libcurl curl-dev  \
+     perl perl-dbi perl-test-nowarnings perl-dbd-pg \
+     python3 python3-dev py3-pip py3-numpy \
   && cp /usr/share/zoneinfo/America/New_York /etc/localtime \
-  && echo ${TZ} > /etc/timezone
+  && echo ${TZ} > /etc/timezone \
+  && pip install --break-system-packages pybigwig
 
 ARG LIB_GIT_COMMIT_SHA=099844ec5005e7fab95358b2b538dbe4f0581572
 RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
