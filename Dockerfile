@@ -29,7 +29,7 @@ COPY bin/ /opt/veupathdb/bin
 RUN chmod +x /opt/veupathdb/bin/*
 
 # VDI PLUGIN SERVER
-ARG PLUGIN_SERVER_VERSION=v1.7.0-a35
+ARG PLUGIN_SERVER_VERSION=v1.7.0-a36
 RUN curl "https://github.com/VEuPathDB/vdi-service/releases/download/${PLUGIN_SERVER_VERSION}/plugin-server.tar.gz" -Lf --no-progress-meter | tar -xz
 
 CMD PLUGIN_ID=bigwig /startup.sh
