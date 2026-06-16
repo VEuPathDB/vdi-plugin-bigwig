@@ -15,8 +15,8 @@ my @files = readdir($dh);
 for my $file (@files) {
   next if $file =~ /.*\.$/;
   next if $file eq "vdi-meta.json";
-  validationError("Invalid bigwig file: '$file'\n") if system("isbigwig $inputDir/$file");
-  validationError("File too big (> 500M): '$file'\n") if -s $file > (5 * 1024 * 1024);
+  my $msg = validateBwFile("$inputDir/$file");
+  validationError($msg) if $msg;
   my $outfile = ($file =~ /\.bw$/)? $file : "$file.bw"; # needed for jbrowse
   copy("$inputDir/$file", "$outputDir/$outfile") || die "Failed copying to outputDir $!\n";
 }
