@@ -15,28 +15,18 @@ RUN apk add --no-cache \
   && echo ${TZ} > /etc/timezone \
   && pip install --break-system-packages pybigwig
 
-ARG LIB_GIT_COMMIT_SHA=768bfe1877dd8068215b0f42a9652236b77ad304
+ARG LIB_GIT_COMMIT_SHA=9ca154b9ae22eb2d1df94e54a7644afd8dee25bc
 RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
   && cd lib-vdi-plugin-rnaseq \
   && git checkout $LIB_GIT_COMMIT_SHA \
   && mkdir -p /opt/veupathdb/lib/perl /opt/veupathdb/bin \
   && cp lib/perl/BigWigUtils.pm /opt/veupathdb/lib/perl \
   && cp bin/* /opt/veupathdb/bin \
-  && rm -rf lib-vdi-plugin-rnaseq
+  && rm -rf vdi-lib-plugin-rnaseq
 
 COPY bin/ /opt/veupathdb/bin
-<<<<<<< HEAD
-=======
-#COPY testdata/ /opt/veupathdb/testdata
 
-RUN export LIB_GIT_COMMIT_SHA=66d983cf6056dd12efd135673821e693fd57a0e9\
-    && git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
-    && cd lib-vdi-plugin-rnaseq \
-    && git checkout $LIB_GIT_COMMIT_SHA \
-    && mkdir -p /opt/veupathdb/lib/perl \
-    && cp lib/perl/BigWigUtils.pm /opt/veupathdb/lib/perl \
-    && cp bin/* /opt/veupathdb/bin
->>>>>>> 459a9f9 (use validateBwFile())
+#COPY testdata/ /opt/veupathdb/testdata
 
 RUN chmod +x /opt/veupathdb/bin/*
 
