@@ -11,22 +11,13 @@ usage() unless scalar(@ARGV) == 2;
 
 my ($inputDir, $outputDir) = @ARGV;
 
-my $VALIDATION_ERROR_CODE = 99;
-
 opendir(my $dh, $inputDir) or die "can't open dir '$inputDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
   next if $file =~ /.*\.$/;
   next if $file eq "vdi-meta.json";
-  my $msg = validateBwFile("$inputDir/$file");
-  validationError($msg) if $msg;
+  validateBwFile("$inputDir/$file");
   copy("$inputDir/$file", "$outputDir/$file") || die "Failed copying to outputDir $!\n";
-}
-
-sub validationError {
-  my ($msg) = @_;
-  print STDOUT "Validation error: $msg\n";
-  exit $VALIDATION_ERROR_CODE;
 }
 
 sub usage {

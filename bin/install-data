@@ -6,7 +6,11 @@ use FindBin;
 use lib "$FindBin::Bin/../lib/perl";
 use BigWigUtils;
 
-usage() unless scalar(@ARGV) == 2 && $ENV{DATA_FILES};
+my @envVars = ('DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_PLATFORM', 'DB_USER', 'DB_PASS', 'DB_SCHEMA', 'DATA_FILES');
+
+usage() unless scalar(@ARGV) == 2;
+
+for my $envVar (@envVars) { die "Missing env variable '$envVar'\n" unless $ENV{$envVar}; }
 
 my ($datasetId, $inputDataDir) = @ARGV;
 
@@ -15,11 +19,19 @@ die "Dataset target dir $datasetDir already exists\n" if -e $datasetDir;
 mkdir($datasetDir) || die "Failed creating dataset target dir $datasetDir\n";
 chmod(0775, $datasetDir) || die "Failed chmod of $datasetDir\n"; # rwxrwxr-x
 
+my $connectString = "DBI:Pg:dbname=$ENV{DB_NAME};host=$ENV{DB_HOST};port=$ENV{DB_PORT}";
+
+my $dbh = DBI->connect($connectString, $ENV{DB_USER}, $ENV{DB_PASS}) || die "Couldn't connect to database: " . DBI->errstr;
+
+$dbh->{RaiseError} = 1;
+
+my $orgNameForFiles = getRefGenome("$inputDataDir/vdi-meta.json");
+
 opendir(my $dh, $inputDataDir) or die "can't open input data dir '$inputDataDir'\n";
 my @files = readdir($dh);
 for my $file (@files) {
   next if $file =~ /^\.+$/ or $file =~ /\.json$/;  # ignore vdi json control files
-  installBwFile("$inputDataDir/$file", $datasetDir);
+  installBwFile("$inputDataDir/$file", $datasetDir, $dbh, $orgNameForFiles);
 }
 
 sub usage {
@@ -30,6 +42,10 @@ Usage: dataset_id data_dir
 
 Environment: DATA_FILES
 ";
+}
+
+END {
+  $dbh->disconnect() if $dbh;
 }
 
 
