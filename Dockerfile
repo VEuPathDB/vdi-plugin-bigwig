@@ -24,6 +24,8 @@ RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
   && cp bin/* /opt/veupathdb/bin \
   && rm -rf vdi-lib-plugin-rnaseq
 
+RUN perl -MCPAN -e 'install qq(JSON)'
+
 COPY bin/ /opt/veupathdb/bin
 
 #COPY testdata/ /opt/veupathdb/testdata
