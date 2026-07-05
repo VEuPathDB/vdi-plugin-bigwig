@@ -21,6 +21,8 @@ chmod(0775, $datasetDir) || die "Failed chmod of $datasetDir\n"; # rwxrwxr-x
 
 my $connectString = "DBI:Pg:dbname=$ENV{DB_NAME};host=$ENV{DB_HOST};port=$ENV{DB_PORT}";
 
+print STDERR "Connect string: $connectString\n";
+
 my $dbh = DBI->connect($connectString, $ENV{DB_USER}, $ENV{DB_PASS}) || die "Couldn't connect to database: " . DBI->errstr;
 
 $dbh->{RaiseError} = 1;
