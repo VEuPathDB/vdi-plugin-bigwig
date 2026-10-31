@@ -15,7 +15,7 @@ RUN apk add --no-cache \
   && echo ${TZ} > /etc/timezone \
   && pip install --break-system-packages pybigwig
 
-ARG LIB_GIT_COMMIT_SHA=2edb2c351487d8aa4d8361981195bb0814f37e14
+ARG LIB_GIT_COMMIT_SHA=272678cb4e51099d51ec37f7e384689e6f94c5cc
 RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
   && cd lib-vdi-plugin-rnaseq \
   && git checkout $LIB_GIT_COMMIT_SHA \
@@ -23,6 +23,14 @@ RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
   && cp lib/perl/BigWigUtils.pm /opt/veupathdb/lib/perl \
   && cp bin/* /opt/veupathdb/bin \
   && rm -rf vdi-lib-plugin-rnaseq
+
+ARG LIB_PERL_GIT_COMMIT_SHA=99d99feb95cceeb61a3802a42da148a1faeee09e
+RUN git clone https://github.com/VEuPathDB/vdi-lib-perl-utils.git \
+  && cd vdi-lib-perl-utils \
+  && git checkout ${LIB_PERL_GIT_COMMIT_SHA} \
+  && mkdir -p /opt/veupathdb/lib/perl /opt/veupathdb/bin \
+  && cp lib/perl/*.pm /opt/veupathdb/lib/perl \
+  && rm -rf vdi-lib-perl-utils
 
 RUN perl -MCPAN -e 'install qq(JSON)'
 

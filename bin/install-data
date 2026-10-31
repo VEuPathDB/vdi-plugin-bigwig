@@ -5,6 +5,7 @@ use File::Copy;
 use FindBin;
 use lib "$FindBin::Bin/../lib/perl";
 use BigWigUtils;
+use VdiPerlUtils;
 
 my @envVars = ('DB_HOST', 'DB_PORT', 'DB_NAME', 'DB_PLATFORM', 'DB_USER', 'DB_PASS', 'DB_SCHEMA', 'DATA_FILES');
 
