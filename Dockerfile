@@ -15,7 +15,7 @@ RUN apk add --no-cache \
   && echo ${TZ} > /etc/timezone \
   && pip install --break-system-packages pybigwig
 
-ARG LIB_GIT_COMMIT_SHA=272678cb4e51099d51ec37f7e384689e6f94c5cc
+ARG LIB_GIT_COMMIT_SHA=24900d434a919c6c736deed0cdfc6b105f1ad899
 RUN git clone https://github.com/VEuPathDB/lib-vdi-plugin-rnaseq.git \
   && cd lib-vdi-plugin-rnaseq \
   && git checkout $LIB_GIT_COMMIT_SHA \
